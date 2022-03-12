@@ -9,4 +9,6 @@ public interface AccountDao {
 	void update(Account account);
 
 	void delete(Account account);
+	
+	Account findByNumber(String Number);
 }

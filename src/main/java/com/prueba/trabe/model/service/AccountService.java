@@ -28,7 +28,7 @@ public class AccountService {
 	@Autowired
 	private MovementDao movementDAO;
 	
-	public AccountDTO getAccount (String number) {
+	public AccountDTO getAccount (String number) throws NotFoundException {
 		Account account = accountDAO.findByNumber(number);
 		if (account == null) {
 			throw new NotFoundException(number, Account.class);
@@ -36,16 +36,16 @@ public class AccountService {
 		return new AccountDTO(account);
 	}
 	
-	public List<MovementDTO> getMovements (String number) {
+	public List<MovementDTO> getMovements (String number) throws NotFoundException {
 		Account account = accountDAO.findByNumber(number);
 		if (account == null) {
 			throw new NotFoundException(number, Account.class);
 		} else {
-			return movementDAO.findAllByNumber().stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
+			return account.getMovements().stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
 		}
 	}
 	
-	public MovementDTO deposit (String number, int amount) {
+	public MovementDTO deposit (String number, int amount) throws NotFoundException {
 		Account account = accountDAO.findByNumber(number);
 		if (account == null) {
 			throw new NotFoundException(number, Account.class);
@@ -59,10 +59,11 @@ public class AccountService {
 			movementDAO.create(movement);
 			account.getMovements().add(movement);
 			accountDAO.update(account);
+			return new MovementDTO(movement);
 		}
 	}
 	
-	public MovementDTO withdraw (String number, int amount) {
+	public MovementDTO withdraw (String number, int amount) throws NotFoundException, InsufficientBalanceException {
 		Account account = accountDAO.findByNumber(number);
 		if (account == null) {
 			throw new NotFoundException(number, Account.class);
@@ -78,6 +79,7 @@ public class AccountService {
 			movementDAO.create(movement);
 			account.getMovements().add(movement);
 			accountDAO.update(account);
+			return new MovementDTO(movement);
 		}
 	}
 }

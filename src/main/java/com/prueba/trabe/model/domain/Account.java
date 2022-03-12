@@ -2,6 +2,7 @@ package com.prueba.trabe.model.domain;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class Account {
 	@SequenceGenerator(name = "account_generator", sequenceName = "account_seq")
 	private Long id_acc;
 	
+	@Column(nullable = false, unique = true)
 	private String number;
 	
 	private int balance;
