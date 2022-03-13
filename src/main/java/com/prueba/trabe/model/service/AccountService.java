@@ -1,6 +1,7 @@
 package com.prueba.trabe.model.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,8 +16,8 @@ import com.prueba.trabe.model.exception.InsufficientBalanceException;
 import com.prueba.trabe.model.exception.NotFoundException;
 import com.prueba.trabe.model.repository.AccountDao;
 import com.prueba.trabe.model.repository.MovementDao;
-import com.prueba.trabe.model.service.util.AccountDTO;
-import com.prueba.trabe.model.service.util.MovementDTO;
+import com.prueba.trabe.model.service.dto.AccountDTO;
+import com.prueba.trabe.model.service.dto.MovementDTO;
 
 @Service
 @Transactional(readOnly = true, rollbackFor = Exception.class)
@@ -45,11 +46,13 @@ public class AccountService {
 		}
 	}
 	
+	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public MovementDTO deposit (String number, int amount) throws NotFoundException {
 		Account account = accountDAO.findByNumber(number);
 		if (account == null) {
 			throw new NotFoundException(number, Account.class);
 		} else {
+			List<Movement> movsList = new ArrayList<>();
 			account.deposit(amount);
 			Movement movement = new Movement();
 			movement.setDate(LocalDate.now());
@@ -57,12 +60,17 @@ public class AccountService {
 			movement.setType(Type.Deposit);
 			movement.setBalance(account.getBalance());
 			movementDAO.create(movement);
-			account.getMovements().add(movement);
+			if(account.getMovements() != null) {
+				movsList.addAll(account.getMovements());
+			}
+			movsList.add(movement);
+			account.setMovements(movsList);
 			accountDAO.update(account);
 			return new MovementDTO(movement);
 		}
 	}
 	
+	@Transactional(readOnly = false, rollbackFor = Exception.class)
 	public MovementDTO withdraw (String number, int amount) throws NotFoundException, InsufficientBalanceException {
 		Account account = accountDAO.findByNumber(number);
 		if (account == null) {
@@ -70,6 +78,7 @@ public class AccountService {
 		} else if (account.getBalance() < amount) {
 			throw new InsufficientBalanceException(number, amount);
 		} else {
+			List<Movement> movsList = new ArrayList<>();
 			account.withdraw(amount);
 			Movement movement = new Movement();
 			movement.setDate(LocalDate.now());
@@ -77,7 +86,11 @@ public class AccountService {
 			movement.setType(Type.Withdrawal);
 			movement.setBalance(account.getBalance());
 			movementDAO.create(movement);
-			account.getMovements().add(movement);
+			if(account.getMovements() != null) {
+				movsList.addAll(account.getMovements());
+			}
+			movsList.add(movement);
+			account.setMovements(movsList);
 			accountDAO.update(account);
 			return new MovementDTO(movement);
 		}

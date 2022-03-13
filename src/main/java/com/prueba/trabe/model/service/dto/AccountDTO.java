@@ -1,4 +1,4 @@
-package com.prueba.trabe.model.service.util;
+package com.prueba.trabe.model.service.dto;
 
 import javax.validation.constraints.NotEmpty;
 
