@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "b32242bc-ed30-43a0-a5dd-5ee28c5555a2",
+		"name": "Trabe Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Token",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/api/token",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"token"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Account Info",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidG9rZW4iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjQ3MTE3MjYyLCJleHAiOjE2NDcxMTc4NjJ9.h9DDM1AyVfs0AJxP7EGmrTLaWUcCE-B1QLFmoyxiA9vKKy1ifKCyGrkclViQNL7ksUxkk9BbcOkmPoljSJskbQ",
+						"type": "text"
+					},
+					{
+						"key": "version",
+						"value": "2.0",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/account/A00001",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"A00001"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Account Movements",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidG9rZW4iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjQ3MjU5ODAwLCJleHAiOjE2NDcyNjA0MDB9.6t-e36Pf-SzbVSEFiz_JPMW5dh-iI7hafUa06M_obIgGpDs2gAS8Vh0gfc6NasJmsK8qzv5PG5fcfnm8VZuRpQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:8080/api/account/A00001/movements",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"A00001",
+						"movements"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deposit",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidG9rZW4iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjQ3MTE2MTU4LCJleHAiOjE2NDcxMTY3NTh9.txmxpmaPtmDZeH0nDTaqKgsSw7SE1aIxEaeHXSZmySdocMu2eh8r_j0lcVDTEUwAjoKyCNj5AaKwJ5WW_AJNig",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "2500",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/account/A00001/deposit",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"A00001",
+						"deposit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Withdraw",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJzb2Z0dGVrSldUIiwic3ViIjoidG9rZW4iLCJhdXRob3JpdGllcyI6WyJST0xFX1VTRVIiXSwiaWF0IjoxNjQ3MTE1OTE0LCJleHAiOjE2NDcxMTY1MTR9.T6I-GBJmGOg-rRo9Eh6lkjGJ9DeJsKDqG-mCmSslFIJreqVu-THuR96aFH_Z6uwWc3PM7Q94aW5AOzaNwISekw",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "5000"
+				},
+				"url": {
+					"raw": "localhost:8080/api/account/A00001/withdraw",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"A00001",
+						"withdraw"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "amount",
+			"value": "25"
+		}
+	]
+}
